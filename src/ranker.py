@@ -1,7 +1,7 @@
 import numpy as np
 from annoy import AnnoyIndex
 from typing import List, Dict
-from utils import read_yaml_file, array_to_hashlib
+from utils import array_to_hashlib
 
 from db import SmartContractDB
 from constants import smart_contract_db_path, user_session_db_path
@@ -55,5 +55,5 @@ def simple_ranker(input_embedding, res, ANN, K=5):
     likes_history = SCDB.find_contract_history(hashed_embedding)
     ranked_NN = rerank(cosine_similarities, likes_history, K=K)
     # return ranked predictions with contract names
-    return {"prediction_text{}".format(ix): SCDB.find_contract_name(contract_id) 
+    return {"prediction_text{}".format(ix+1): SCDB.find_contract_name(contract_id) 
             for ix, (contract_id, score) in enumerate(ranked_NN)}

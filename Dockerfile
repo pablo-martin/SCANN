@@ -8,19 +8,14 @@ RUN apt-get update && \
     apt-get install -y git && \
     apt-get install -y unzip && \
     apt-get clean
- 
 
 COPY requirements.txt ./
 RUN python3 -m pip install -r requirements.txt
 
     
 WORKDIR /app
-COPY ./srcc ./srcc
+COPY ./src ./src
+RUN cd src/ && git clone https://github.com/pablo-martin/SmartEmbed.git
+RUN cd src/SmartEmbed/ && bash download_models.sh
 
-RUN which python3
-
-RUN cd srcc/ && git clone https://github.com/pablo-martin/SmartEmbed.git
-RUN cd srcc/SmartEmbed/ && bash download_models.sh && cd ../..
-
-# Set the command to run the Python script
-CMD ["python3", "-u", "srcc/savior.py"]
+CMD ["python3", "-u", "src/app.py"]
