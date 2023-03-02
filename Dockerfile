@@ -15,7 +15,12 @@ RUN python3 -m pip install -r requirements.txt
     
 WORKDIR /app
 COPY ./src ./src
+# set up embedding repo and download models
 RUN cd src/ && git clone https://github.com/pablo-martin/SmartEmbed.git
 RUN cd src/SmartEmbed/ && bash download_models.sh
+
+RUN cd src/ && gdown https://drive.google.com/uc?id=1t6l_6OyYjYFw84CLXrx6SYft7FDdNYfy
+RUN cd src/tables/ && gdown  https://drive.google.com/uc?id=1IXO2Xz4wBG9S-eCmYdvkrKVYY01rR_C-
+
 
 CMD ["python3", "-u", "src/app.py"]
