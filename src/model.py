@@ -15,12 +15,15 @@ def inference(smart_contract: str, K : int = 5, search_k : int = 20) -> Dict:
     #to-do: error checking, what if any step fails?
     
     # compute embedding
-    embedding = SE.get_vector(smart_contract).reshape(-1)
+    try:
+        embedding = SE.get_vector(smart_contract).reshape(-1)
+    except: # this library is fragile
+        return -1, -1, -1
     
     # ANN Retrieval
     neighbours = ANN.get_nns_by_vector(embedding, K * 4, search_k=search_k, include_distances=False)
     
     # Ranking
-    ranked_NN = simple_ranker(embedding, neighbours, ANN, K=K)
+    ranked_NN, hashed_embedding = simple_ranker(embedding, neighbours, ANN, K=K)
     
-    return ranked_NN
+    return ranked_NN, embedding, hashed_embedding

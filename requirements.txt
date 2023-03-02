@@ -4,3 +4,4 @@ gensim==3.8.3
 lxml
 annoy==1.17.1
 flask
+flask_cors

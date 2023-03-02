@@ -55,5 +55,8 @@ def simple_ranker(input_embedding, res, ANN, K=5):
     likes_history = SCDB.find_contract_history(hashed_embedding)
     ranked_NN = rerank(cosine_similarities, likes_history, K=K)
     # return ranked predictions with contract names
-    return {"prediction_text{}".format(ix+1): SCDB.find_contract_name(contract_id) 
-            for ix, (contract_id, score) in enumerate(ranked_NN)}
+    ranked_NN = {
+        contract_id: SCDB.find_contract_name(contract_id) 
+        for ix, (contract_id, score) in enumerate(ranked_NN)
+    }
+    return ranked_NN, hashed_embedding
