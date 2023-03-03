@@ -12,4 +12,4 @@ def array_to_hashlib(arr):
     return hashlib.sha256(bytes(emb_str, encoding='utf-8')).hexdigest()
 
 def get_contract_text(path_contract):
-    return requests.get(raw_github_base.format(contract_name)).text
+    return requests.get(raw_github_base.format(path_contract)).text

@@ -1,5 +1,4 @@
 import numpy as np
-from annoy import AnnoyIndex
 from typing import List, Dict
 from utils import array_to_hashlib
 
@@ -15,28 +14,12 @@ def double_sigmoid(x):
 def cosine_similarity(a, b):
     return np.dot(a, b)/(np.linalg.norm(a)*np.linalg.norm(b))
 
-
 def embeddings_cosine_similarity(input_embedding, res: List[int], ANN) -> Dict:
     return {
         _res: cosine_similarity(input_embedding, ANN.get_item_vector(_res)) 
         for _res in res
     }
-
-def single_access(input_embedding_id):
-    try:
-        like_history = user_feedback[input_embedding_id]
-        return like_history
-    except KeyError:
-        return dict()
-
-def get_input_embedding_id(input_embedding):
-    hashed_embedding = array_to_hashlib(input_embedding)
-    try:
-        return embhash_to_id[hashed_embedding]
-    except KeyError:
-        return -1
-    
-    
+  
 def rerank(cosine_similarities, likes_history, K=5):
     out = dict()
     for contract_id, cosine in cosine_similarities.items():

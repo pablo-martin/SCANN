@@ -1,7 +1,5 @@
-import os
 import json
 import sqlite3
-from datetime import datetime
 from typing import Dict
 
 from constants import user_session_db_path, smart_contract_db_path

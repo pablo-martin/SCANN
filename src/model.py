@@ -12,8 +12,6 @@ ANN.load(model_path)
 
 
 def inference(smart_contract: str, K : int = 5, search_k : int = 20) -> Dict:
-    #to-do: error checking, what if any step fails?
-    
     # compute embedding
     try:
         embedding = SE.get_vector(smart_contract).reshape(-1)
